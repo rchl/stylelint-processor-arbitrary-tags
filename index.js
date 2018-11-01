@@ -13,6 +13,14 @@ module.exports = function (options) {
   options.body = options.body || '[\\s\\S]*?';
   options.fileFilterRegex = options.fileFilterRegex || [];
 
+  options.fileFilterRegex = options.fileFilterRegex.map((re) => {
+    if (typeof re === 'string') {
+      return new RegExp(re);
+    }
+
+    return re;
+  });
+
   const snippetRegexp = new RegExp(`(${options.startTag})(${options.body})\\s*${options.endTag}`, 'g');
 
   /**
